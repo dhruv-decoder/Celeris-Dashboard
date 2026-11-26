@@ -77,30 +77,22 @@ python -m http.server 8000 -d dashboard    # the dashboard on the data you just 
 
 ## How it works
 
-```mermaid
-flowchart LR
-    A[Raw CSV files] --> B[Clean]
-    B --> C[Rebuild demand<br/>anomaly register]
-    C --> D[Drivers<br/>and features]
-    D --> E[Baselines<br/>and backtest]
-    E --> F[Global LightGBM<br/>P10 / P50 / P90]
-    F --> G[submission.csv<br/>forecast.csv]
-    F --> H[dashboard/data]
-    H --> I[Dashboard]
-```
+<p align="center"><img src="docs/images/pipeline.svg" width="100%" alt="Pipeline: raw CSV files, clean, rebuild demand, features, backtest, LightGBM model, then the forecast files and the dashboard data that the dashboard reads"></p>
 
-| Step | Command | What it does | Main outputs |
-|---|---|---|---|
-| Clean | `python run.py clean` | Reads every date format, unifies product, region, channel and customer names, removes reloaded records, fixes unit, price and currency errors, repairs the macro file | `outputs/clean/`, `outputs/reports/data_quality.json` |
-| Demand | `python run.py demand` | Rebuilds what customers asked for where stock ran out (stockout file, chip shortage), estimates lost and missing months, builds the anomaly register, measures every calendar event | `outputs/demand/panel.parquet`, `outputs/reports/anomaly_register.csv`, `event_effects.csv` |
-| Drivers | `python run.py drivers` | Which economic indicator leads which family, at what lag, and whether the link is stable. The shift to electric vehicles | `outputs/reports/macro_leadlag*.csv`, `ev_shift.csv` |
-| Backtest | `python run.py backtest` | Six simple methods replayed at four past forecast dates, 19 months each | `outputs/reports/backtest_*.csv` |
-| Features | `python run.py features` | Model inputs: history, ordering rhythm, demand class, calendar and holidays, events, lifecycle, growth, economy | `outputs/features/` |
-| Model | `python run.py model_backtest model_final` | Backtests the model on the same rows as the simple methods, calibrates the ranges, then trains on all history and forecasts | `outputs/backtest/`, `outputs/forecast/` |
-| Scenarios | `python run.py scenarios` | Re-runs the saved models with the economy shifted (what-if) | `outputs/reports/scenarios.json` |
-| Insights | `python run.py insights` | Accuracy at planning levels, account changes, findings | `outputs/reports/accuracy_by_level.csv` |
-| Submit | `python run.py submit` | Applies launch and end-of-life rules, checks the result against `test.csv`, writes the submission and the full forecast table | `outputs/submission/submission.csv`, `outputs/forecast/forecast.csv` |
-| Export | `python run.py export` | Writes the dashboard's data files | `dashboard/data/*.json` |
+`python run.py` runs every step in order. Each step can also be run on its own with `python run.py <step>`.
+
+| Step | What it does | Main outputs |
+|---|---|---|
+| `clean` | Reads every date format, unifies product, region, channel and customer names, removes reloaded records, fixes unit, price and currency errors, repairs the macro file | `outputs/clean/`<br>`outputs/reports/data_quality.json` |
+| `demand` | Rebuilds what customers asked for where stock ran out (stockout file, chip shortage), estimates lost and missing months, builds the anomaly register, measures every calendar event | `outputs/demand/panel.parquet`<br>`outputs/reports/anomaly_register.csv` |
+| `drivers` | Which economic indicator leads which family, at what lag, and whether the link is stable; the shift to electric vehicles | `outputs/reports/macro_leadlag.csv` |
+| `backtest` | Six simple methods replayed at four past forecast dates, 19 months each | `outputs/reports/backtest_*.csv` |
+| `features` | Model inputs: history, ordering rhythm, demand class, calendar and holidays, events, lifecycle, growth, economy | `outputs/features/` |
+| `model_backtest`<br>`model_final` | Backtests the model on the same rows as the simple methods and calibrates the ranges, then trains on all history and forecasts | `outputs/backtest/`<br>`outputs/forecast/` |
+| `scenarios` | Re-runs the saved models with the economy shifted (what-if) | `outputs/reports/scenarios.json` |
+| `insights` | Accuracy at planning levels, account changes, findings | `outputs/reports/accuracy_by_level.csv` |
+| `submit` | Applies launch and end-of-life rules, checks the result against `test.csv`, writes the submission and the full forecast table | `outputs/submission/submission.csv`<br>`outputs/forecast/forecast.csv` |
+| `export` | Writes the dashboard's data files | `dashboard/data/*.json` |
 
 ### Key decisions
 
