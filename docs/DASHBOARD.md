@@ -27,7 +27,7 @@ local settings out; `vercel.json` sets caching for `data/`.
 - **Shareable state.** The address bar holds the view and filters (`#forecast?fam=Hydraulic%20Systems&reg=India`), so
   "Copy link" shares exactly what is on screen.
 - **Finder and keys.** `/` opens a finder for products, customers, regions, families and views; `?` opens the
-  reading guide; `t` switches light / dark.
+  reading guide; `t` switches light / dark (light is the default; the choice is remembered in the browser).
 - **Type:** Archivo for headings and headline numbers, Public Sans for text, JetBrains Mono for numbers in tables.
 - **Colour has one meaning each:** blue = history, orange = forecast, red / green = worse / better, violet =
   estimated data. Dark mode has its own colour steps. Categorical colours come from a palette checked for
@@ -35,7 +35,8 @@ local settings out; `vercel.json` sets caching for `data/`.
 
 ## Views
 The menu follows the brief: **Part 1 · Training data** (what happened) and **Part 2 · Prediction** (what will
-happen); the five required views are marked "required", and the seven optional views use the brief's names.
+happen); the five required views are marked "required", and the seven optional views use the brief's names. The
+**All / Part 1 / Part 2** switch above the menu shows only the views for one part of the brief.
 
 | View | Brief | Shows |
 |---|---|---|
@@ -79,7 +80,7 @@ multiplied single effects (`outputs/reports/scenarios.json`, `combination_check`
 ## Testing
 - `tests/ui_check.py` opens every view in a headless browser (light and dark, plus filtered states) and fails on any
   JavaScript error or a view that draws no chart. Screenshots go to `outputs/ui/`.
-- `tests/ui_interactions.py` clicks through the controls (filters, product search, finder, help, theme, replay,
+- `tests/ui_interactions.py` clicks through the controls (filters, product search, finder, Part 1 / Part 2 switch, help, theme, replay,
   what-if presets, service-level slider, CSV download, shared links) and checks each result.
 - `tests/test_dashboard.py` checks the data files against the pipeline outputs, that every finding carries a number
   and links to a real view, that the what-if grid is complete, and that the code reads nothing but the data files.

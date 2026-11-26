@@ -62,6 +62,17 @@ def main():
         check("finder applies a customer filter", "Orion" in pg.inner_text(".scope"))
         pg.click("#f-reset")
 
+        pg.click('#parts button[data-p="p1"]')
+        pg.wait_for_timeout(200)
+        menu = pg.inner_text("#nav")
+        check("Part 1 switch shows only the training-data views", "Data health" in menu and "Forecast & accuracy" not in menu)
+        pg.click('#parts button[data-p="p2"]')
+        pg.wait_for_timeout(200)
+        menu = pg.inner_text("#nav")
+        check("Part 2 switch shows only the prediction views", "Forecast & accuracy" in menu and "Data health" not in menu)
+        pg.click('#parts button[data-p="all"]')
+
+        check("light theme by default", pg.evaluate("document.documentElement.dataset.theme") == "light")
         pg.keyboard.press("?")
         check("help panel opens", pg.is_visible("#helpbox .help"))
         pg.keyboard.press("Escape")

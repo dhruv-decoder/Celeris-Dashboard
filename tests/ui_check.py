@@ -38,6 +38,7 @@ def main(theme="light"):
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={"width": 1440, "height": 1000}, color_scheme=theme)
+        page.add_init_script(f"localStorage.setItem('celeris-theme', '{theme}')")
         errors = []
         page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
         page.on("pageerror", lambda e: errors.append(str(e)))

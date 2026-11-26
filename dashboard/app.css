@@ -49,6 +49,11 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .logo svg{width:30px;height:30px;flex:none}
 .logo b{display:block;font-family:var(--display);font-stretch:112%;font-weight:800;font-size:16px;letter-spacing:.01em;color:#fff;line-height:1.1}
 .logo span{font-size:12px;color:var(--rail-muted)}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:12px 14px 0;padding:3px;border-radius:9px;background:var(--rail-2)}
+.parts button{all:unset;cursor:pointer;text-align:center;padding:5px 0;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--rail-muted)}
+.parts button:hover{color:#fff}
+.parts button:focus-visible{outline:2px solid var(--hist)}
+.parts button[aria-pressed="true"]{background:var(--rail);color:#fff}
 #nav{flex:1;overflow:auto;padding:10px 10px 16px}
 #nav h4{margin:14px 10px 5px;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--rail-muted);font-weight:600}
 #nav button{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;width:calc(100% - 20px);padding:7px 10px;border-radius:8px;font-size:13.5px;color:var(--rail-ink);position:relative;white-space:nowrap}

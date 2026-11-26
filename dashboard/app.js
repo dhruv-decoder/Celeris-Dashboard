@@ -2,7 +2,7 @@
 "use strict";
 
 const $ = s => document.querySelector(s);
-const ST = { f: { fam: "", sku: "", reg: "", ch: "", cust: "" }, view: "overview", unit: "units", zoom: "recent", charts: [] };
+const ST = { f: { fam: "", sku: "", reg: "", ch: "", cust: "" }, view: "overview", unit: "units", zoom: "recent", part: "all", charts: [] };
 let D, M, A, Q, DR, SO;           // series, meta, anomalies, quality, drivers, stockouts
 let NH, NF, ALLM, NAMES;          // history months, forecast months, all month labels, filter value names
 const Z = 1.2816;                 // P10/P90 are 1.2816 standard deviations from the middle
@@ -290,13 +290,22 @@ const VIEWS = [
   ["Drivers & data", "download", "Data download", "opt", "data"],
 ];
 const VIEW = Object.fromEntries(VIEWS.map(v => [v[1], v]));
+// the "Show" switch above the menu: all views, or only those for Part 1 (training data) or Part 2 (prediction)
+const HIDDEN = { all: "", p1: "Part 2 · Prediction", p2: "Part 1 · Training data" };
 function buildNav() {
   let g = "", h = "";
+  document.querySelectorAll("#parts button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === ST.part));
   for (const [grp, id, name, kind] of VIEWS) {
+    if (grp === HIDDEN[ST.part]) continue;
     if (grp !== g) { h += `<h4>${grp}</h4>`; g = grp; }
     h += `<button data-v="${id}" ${id === ST.view ? 'aria-current="page"' : ""}>${icon(id)}<span>${name}</span>${kind === "req" ? `<span class="req" title="One of the 5 required views">required</span>` : ""}</button>`;
   }
   $("#nav").innerHTML = h;
+}
+function showPart(p) {
+  ST.part = p;
+  try { localStorage.setItem("celeris-part", p); } catch (e) { /* storage blocked */ }
+  if ((VIEW[ST.view] || [])[0] === HIDDEN[p]) go("overview"); else buildNav();
 }
 function go(v) { ST.view = v; buildNav(); render(); window.scrollTo({ top: 0 }); $("#rail").classList.remove("open"); }
 function buildFilters() {
@@ -1202,16 +1211,17 @@ function openHelp() {
   $("#hx").onclick = close; box.onclick = e => { if (e.target === box) close(); };
 }
 function toggleTheme() {
-  const r = document.documentElement, cur = r.dataset.theme;
-  const dark = cur ? cur === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-  r.dataset.theme = dark ? "light" : "dark";
+  const r = document.documentElement;
+  r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
   try { localStorage.setItem("celeris-theme", r.dataset.theme); } catch (e) { /* storage blocked */ }
   render();
 }
 
 /* ------------------------------------------------------------------ start */
 (async function start() {
+  // light by default; the light / dark switch is remembered in this browser
   try { const t = localStorage.getItem("celeris-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) { /* storage blocked */ }
+  try { const p = localStorage.getItem("celeris-part"); if (HIDDEN[p] !== undefined) ST.part = p; } catch (e) { /* storage blocked */ }
   try { await load(); } catch (e) {
     $("#view").innerHTML = `<div class="empty">Could not load the data files (${esc(e.message)}).<br>Run <code>python run.py export</code>, then serve this folder with <code>python -m http.server 8000 -d dashboard</code> and open <code>http://localhost:8000</code>.</div>`;
     return;
@@ -1219,6 +1229,7 @@ function toggleTheme() {
   readHash();
   buildNav(); buildFilters(); render();
   $("#nav").onclick = e => { const b = e.target.closest("button"); if (b) go(b.dataset.v); };
+  $("#parts").onclick = e => { const b = e.target.closest("button"); if (b) showPart(b.dataset.p); };
   $("#download").onclick = () => downloadForecast(sel());
   $("#theme").onclick = toggleTheme;
   $("#find").onclick = openPalette; $("#find2").onclick = openPalette;
@@ -1231,6 +1242,5 @@ function toggleTheme() {
     else if (e.key === "Escape") $("#helpbox").hidden = true;
   });
   addEventListener("hashchange", () => { const before = ST.view + JSON.stringify(ST.f); readHash(); if (ST.view + JSON.stringify(ST.f) !== before) { buildNav(); render(); } });
-  try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => render()); } catch (e) { /* old browser */ }
   let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => ST.charts.forEach(c => c.resize()), 120); });
 })();
