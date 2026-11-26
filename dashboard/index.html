@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Celeris Control Tower</title>
+<meta name="description" content="Demand history 2019–2026 and forecast to May 2028 for Celeris Automobili Industrial: about 600 products in 6 regions. By Dhruv Tibarewal.">
+<meta name="theme-color" content="#13181b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2313181b'/%3E%3Cpath d='M6 22l6-6 4 3 9-10' fill='none' stroke='%23f07a3a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+  <aside class="rail" id="rail">
+    <div class="logo">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1f272c"/><path d="M6 22l6-6 4 3 9-10" fill="none" stroke="#f07a3a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><b>Celeris</b><span>Control Tower</span></div>
+    </div>
+    <nav id="nav" aria-label="Views"></nav>
+    <div class="rail-foot">
+      <button id="find2" type="button"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Find anything <kbd style="margin-left:auto">/</kbd></button>
+      <button id="help" type="button"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg>How to read this <kbd style="margin-left:auto">?</kbd></button>
+      <button id="theme" type="button"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor"/></svg>Light / dark</button>
+      <div class="by">Dhruv Tibarewal<span id="generated" hidden></span></div>
+    </div>
+  </aside>
+  <header class="bar">
+    <button class="menu" id="menu" type="button" aria-label="Open menu"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <span class="mbrand">Celeris <span>Control Tower</span></span>
+    <div class="filters" id="filters" role="search" aria-label="Filters for every view">
+      <label class="fs" id="fs-fam"><span>Family</span><select id="f-fam"></select></label>
+      <label class="fs" id="fs-sku"><span>Product</span><input id="f-sku" list="sku-list" placeholder="All" autocomplete="off" spellcheck="false"><datalist id="sku-list"></datalist></label>
+      <label class="fs" id="fs-reg"><span>Region</span><select id="f-reg"></select></label>
+      <label class="fs" id="fs-ch"><span>Channel</span><select id="f-ch"></select></label>
+      <label class="fs" id="fs-cust"><span>Customer</span><select id="f-cust"></select></label>
+      <button class="reset" id="f-reset" type="button" hidden>Clear filters</button>
+    </div>
+    <div class="bar-right">
+      <button class="btn" id="find" type="button" title="Search products, customers, views (press /)"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="lbl">Find</span></button>
+      <button class="btn" id="share" type="button" title="Copy a link to this view with these filters"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="lbl">Copy link</span></button>
+      <button class="btn primary" id="download" type="button" title="Download the forecast for the current filters as CSV"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span class="lbl">Forecast CSV</span></button>
+    </div>
+  </header>
+  <main id="view"><div class="loading"><div>Loading 3,000 series of history and forecast…</div><div class="track"><i></i></div></div></main>
+</div>
+
+<div class="overlay" id="palette" hidden>
+  <div class="dialog" role="dialog" aria-label="Find">
+    <div class="pal-in"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="pal-q" placeholder="Type a product (BSS-008), customer, region, family or view…" autocomplete="off" spellcheck="false"><kbd>esc</kbd></div>
+    <div class="pal-list" id="pal-list"></div>
+  </div>
+</div>
+<div class="overlay" id="helpbox" hidden><div class="dialog" role="dialog" aria-label="How to read this"><div class="help" id="help-body"></div></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="vendor/echarts.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
