@@ -1,0 +1,19 @@
+# Python environments and caches
+.venv/
+.venv-*/
+__pycache__/
+.pytest_cache/
+.DS_Store
+
+# Competition data (download it from the hackathon page)
+/data/
+
+# Generated outputs: rebuilt by `python run.py`; only the submission file is kept in the repository
+/outputs/*
+!/outputs/submission/
+/outputs/submission/*
+!/outputs/submission/submission.csv
+
+# Deployment settings
+dashboard/.vercel/
+dashboard/.env*
