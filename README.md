@@ -171,6 +171,7 @@ Required views in **bold**.
 - The same five filters (family, product, region, channel, customer) apply to every view. The address bar keeps
   them, so a copied link opens the same view with the same filters.
 - History and forecast share one timeline, with the forecast marked and its P10–P90 range shaded.
+  Timelines zoom with the bar under them, and **Reset zoom** puts them back.
 - Every number comes from `dashboard/data/`, written by `python run.py export`. `tests/test_dashboard.py` checks
   those files against the pipeline outputs.
 

@@ -28,6 +28,8 @@ local settings out; `vercel.json` sets caching for `data/`.
   "Copy link" shares exactly what is on screen.
 - **Finder and keys.** `/` opens a finder for products, customers, regions, families and views; `?` opens the
   reading guide; `t` switches light / dark (light is the default; the choice is remembered in the browser).
+- **Zoom.** Timelines zoom with the bar under them, or with a pinch / Ctrl + scroll on the chart; plain scrolling always
+  moves the page. "Reset zoom" appears while a chart is zoomed. Charts redraw whenever their box changes size.
 - **Type:** Archivo for headings and headline numbers, Public Sans for text, JetBrains Mono for numbers in tables.
 - **Colour has one meaning each:** blue = history, orange = forecast, red / green = worse / better, violet =
   estimated data. Dark mode has its own colour steps. Categorical colours come from a palette checked for
