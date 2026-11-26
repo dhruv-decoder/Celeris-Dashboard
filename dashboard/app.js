@@ -176,8 +176,37 @@ const storyFor = () => (M.story || []).filter(e => { const s = scopeOf(e.scope);
 function mount(el, option) {
   const node = typeof el === "string" ? $(el) : el;
   const old = echarts.getInstanceByDom(node); if (old) { old.dispose(); ST.charts = ST.charts.filter(c => c !== old); }
+  if (node._ro) node._ro.disconnect();
   const c = echarts.init(node, null, { renderer: "canvas" });
-  c.setOption(option); ST.charts.push(c); return c;
+  c.setOption(option); ST.charts.push(c);
+  // redraw whenever the chart's box changes size (menu opened, scrollbar, window), not only on window resize
+  if (window.ResizeObserver) { node._ro = new ResizeObserver(() => { if (!c.isDisposed() && node.isConnected) c.resize(); }); node._ro.observe(node); }
+  if (option.dataZoom) {
+    zoomReset(node, c);
+    // plain wheel events go to the page (scroll); only pinch / Ctrl + scroll reach the chart's zoom
+    if (!node._wheel) { node._wheel = true; node.addEventListener("wheel", e => { if (!e.ctrlKey) e.stopPropagation(); }, { capture: true }); }
+  }
+  return c;
+}
+/* Zoom on time charts: drag the bar under the chart, or pinch / Ctrl + scroll on the chart. Plain scrolling moves
+   the page, so a chart never zooms by accident while scrolling past it. */
+const COARSE = matchMedia("(pointer: coarse)").matches;
+function zoomBar(startValue, slider = true) {
+  const inside = { type: "inside", startValue, zoomOnMouseWheel: "ctrl", moveOnMouseWheel: false, moveOnMouseMove: !COARSE, preventDefaultMouseMove: !COARSE };
+  if (!slider) return [inside];
+  return [inside, { type: "slider", startValue, height: 18, bottom: 4, showDataShadow: false, borderColor: css("--line"), backgroundColor: css("--sunk"),
+    fillerColor: css("--hist-soft"), handleStyle: { color: css("--surface"), borderColor: css("--hist") }, moveHandleStyle: { color: css("--hist-soft") },
+    textStyle: { color: css("--muted"), fontSize: 11 }, labelFormatter: (i, m) => monthName(m) }];
+}
+/* "Reset zoom" appears on a chart while it is zoomed and puts it back to how it opened. */
+function zoomReset(node, c) {
+  const old = node.querySelector(":scope > .zreset"); if (old) old.remove();
+  const z0 = c.getOption().dataZoom[0], start = z0.start, end = z0.end;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "zreset"; b.hidden = true; b.textContent = "Reset zoom";
+  b.onclick = () => { c.dispatchAction({ type: "dataZoom", start, end }); b.hidden = true; };
+  node.appendChild(b);
+  c.on("datazoom", () => { const z = c.getOption().dataZoom[0]; b.hidden = Math.abs(z.start - start) < 0.5 && Math.abs(z.end - end) < 0.5; });
 }
 const tip = () => ({ backgroundColor: css("--surface"), borderColor: css("--line"), textStyle: { color: css("--ink"), fontSize: 12 }, extraCssText: "box-shadow:0 6px 20px rgba(0,0,0,.12);border-radius:8px" });
 function base(extra = {}) {
@@ -186,7 +215,9 @@ function base(extra = {}) {
     textStyle: { fontFamily: getComputedStyle(document.body).fontFamily, color: ink2 },
     grid: { left: 56, right: 18, top: 30, bottom: 34, containLabel: false },
     tooltip: { trigger: "axis", ...tip(), valueFormatter: v => v == null ? "–" : fmt(v) },
-    legend: { top: 0, right: 0, textStyle: { color: ink2, fontSize: 12 }, icon: "roundRect", itemWidth: 12, itemHeight: 8 },
+    // on a phone the legend stays on one line (with arrows) instead of wrapping into the plot
+    legend: { type: innerWidth < 700 ? "scroll" : "plain", top: 0, right: 0, left: innerWidth < 700 ? 0 : "auto", textStyle: { color: ink2, fontSize: 12 }, icon: "roundRect", itemWidth: 12, itemHeight: 8,
+      pageIconColor: css("--ink-2"), pageIconInactiveColor: css("--line"), pageTextStyle: { color: muted } },
     xAxis: { type: "category", axisLine: { lineStyle: { color: css("--axis") } }, axisTick: { show: false }, axisLabel: { color: muted } },
     yAxis: { type: "value", splitLine: { lineStyle: { color: grid } }, axisLabel: { color: muted, formatter: v => fmtK(v) } },
     animationDuration: REDUCED ? 0 : 500,
@@ -226,7 +257,8 @@ function timeline(el, h, f, opts = {}) {
   const o = base({
     xAxis: yearAxis(ALLM),
     yAxis: { ...base().yAxis, axisLabel: { color: css("--muted"), formatter: v => cur + fmtK(v) } },
-    legend: { ...base().legend, data: series.map(s => s.name).filter(n => n !== "P10") },
+    legend: { ...base().legend, data: series.map(s => s.name).filter(n => n !== "P10")
+      .map(n => n === "Typical month (P50)" ? { name: n, icon: "path://M0 3h4v2H0zM6 3h4v2H6zM12 3h4v2h-4z" } : n) },
     tooltip: { ...base().tooltip, formatter: ps => {
       const m = ps[0].axisValue, k = ALLM.indexOf(m), fc = k >= NH ? k - NH : -1;
       let s = `<b>${monthName(m)}</b>${fc >= 0 ? ' <span style="color:' + css("--fc") + '">forecast</span>' : ""}<br>`;
@@ -236,8 +268,7 @@ function timeline(el, h, f, opts = {}) {
       const ev = (opts.story || []).filter(e => m >= e.start && m <= e.end);
       if (ev.length) s += `<div style="margin-top:4px;max-width:280px;white-space:normal;color:${css("--ink-2")}">${ev.map(e => "● " + esc(e.label)).join("<br>")}</div>`;
       return s; } },
-    dataZoom: [{ type: "inside", startValue: zoomStart }, { type: "slider", height: 16, bottom: 4, startValue: zoomStart, borderColor: "transparent",
-      fillerColor: css("--hist-soft"), handleStyle: { color: css("--hist") }, textStyle: { color: css("--muted") }, dataBackground: { lineStyle: { color: css("--axis") }, areaStyle: { color: css("--sunk") } } }],
+    dataZoom: zoomBar(zoomStart),
     grid: { left: 62, right: 18, top: 40, bottom: 52 },
     series,
   });
@@ -393,10 +424,8 @@ RENDER.overview = (v, idx) => {
   const who = filtered() ? `For ${esc(scopeText())}, customers` : "Customers";
   v.innerHTML = head("both", "Executive overview", "", "", idx) +
     `<div class="hero">
-      <div class="lead">
-        <h1 class="statement">${who} are expected to ask for <em>${fmtK(n19.e)} units</em> worth <em>${money(rev19)}</em> from Nov 2026 to May 2028.</h1>
-        <p class="lede">The next 12 months: ${fmtK(n12.e)} units, <span class="${ch >= 0 ? "up" : "down"}">${sgn(ch)}</span> on the last 12 months. Forecast made at the end of October 2026 for ${fmt(idx.length)} product × region series.</p>
-      </div>
+      <p class="statement">${who} are expected to ask for <em>${fmtK(n19.e)} units</em> worth <em>${money(rev19)}</em> from Nov 2026 to May 2028.</p>
+      <p class="lede">Next 12 months: ${fmtK(n12.e)} units, <span class="${ch >= 0 ? "up" : "down"}">${sgn(ch)}</span> on the last 12. Forecast made at the end of October 2026.</p>
     </div>
     <div class="kpis">
       ${kpi("19-month forecast", fmtK(n19.e) + " units", `80% range ${fmtK(n19.lo)} – ${fmtK(n19.hi)}`, "fc", null)}
@@ -600,7 +629,7 @@ RENDER.explorer = (v, idx) => {
     if (b.dataset.c === "all") setFilters({ fam: "", sku: "", reg: "" }); else if (b.dataset.c === "fam") setFilters({ sku: "", reg: "" }); else if (b.dataset.c === "sku") setFilters({ reg: "" }); };
   $("#drill").onclick = e => { const tr = e.target.closest("tr.click"); if (!tr) return; const k = +tr.dataset.k;
     if (level === "fam") setFilters({ fam: String(k) }); else if (level === "sku") setFilters({ sku: D.skus[k].id, fam: String(D.families.indexOf(D.skus[k].family)) }); else if (level === "reg") setFilters({ reg: String(k) }); };
-  mount("#c-ds", base({ xAxis: yearAxis(D.months), legend: base().legend, dataZoom: [{ type: "inside" }],
+  mount("#c-ds", base({ xAxis: yearAxis(D.months), legend: base().legend, dataZoom: zoomBar(undefined, false),
     series: [{ name: "Asked for (demand)", type: "line", data: dem, symbol: "none", lineStyle: { width: 2, color: css("--hist") }, itemStyle: { color: css("--hist") } },
       { name: "Shipped", type: "line", data: shp, symbol: "none", lineStyle: { width: 1.3, color: css("--muted") }, itemStyle: { color: css("--muted") } }] }));
   const last36 = dem.slice(-36), mo = D.months.slice(-36).map(m => +m.slice(5) - 1), byM = Array(12).fill(0), cnt = Array(12).fill(0);
@@ -732,7 +761,7 @@ RENDER.anomalies = (v, idx) => {
   }
   $("#an-sub").textContent = focused ? "Each dot is a month with flagged points on this demand line; size = how many series. Hover for the reason."
     : "Flagged series per month, by kind. Pick a type, or narrow the filters to 30 series or fewer, to see the points on the demand line.";
-  mount("#c-an", base({ xAxis: yearAxis(D.months), legend: base().legend, dataZoom: [{ type: "inside" }, { type: "slider", height: 16, bottom: 4, borderColor: "transparent", fillerColor: css("--hist-soft") }], grid: { left: 60, right: 18, top: 36, bottom: 50 },
+  mount("#c-an", base({ xAxis: yearAxis(D.months), legend: base().legend, dataZoom: zoomBar(undefined), grid: { left: 60, right: 18, top: 36, bottom: 52 },
     tooltip: focused ? { trigger: "item", ...tip(), formatter: p => p.seriesType !== "scatter" ? "" : `<b>${monthName(p.value[0])}</b> · ${p.seriesName}: ${fmt(p.data.n)} series<br>` + (p.data.n === 1 ? `<div style="max-width:320px;white-space:normal">${esc(p.data.r[6])}</div>` :
         Object.entries(p.data.t).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t, n]) => `${esc(A.types[t])}: ${fmt(n)}`).join("<br>")) } : base().tooltip,
     series }));
@@ -767,7 +796,7 @@ RENDER.stockouts = (v, idx) => {
     </div>
     <div class="card mt"><h2>Series that lost the most</h2><p class="sub">Click a row to open the series in the demand explorer</p><div class="tw"><table class="t" id="sot"><tr><th>Series</th><th>Customer</th><th class="n">Stockout months</th><th class="n">Asked for</th><th class="n">Shipped</th><th class="n">Lost</th></tr>
       ${top.map(([i, b]) => `<tr class="click" data-i="${i}"><td class="mono">${seriesName(+i)}</td><td>${esc(D.customers[D.cust[i]])}</td><td class="n">${b.n}</td><td class="n">${fmt(b.req)}</td><td class="n">${fmt(b.shp)}</td><td class="n">${fmt(b.lost)}</td></tr>`).join("") || `<tr><td colspan="6" class="empty">No listed stockouts in this selection.</td></tr>`}</table></div></div>${foot()}`;
-  mount("#c-so", base({ xAxis: yearAxis(D.months), legend: base().legend, grid: { left: 60, right: 18, top: 52, bottom: 30 }, dataZoom: [{ type: "inside" }],
+  mount("#c-so", base({ xAxis: yearAxis(D.months), legend: base().legend, grid: { left: 60, right: 18, top: 52, bottom: 30 }, dataZoom: zoomBar(undefined, false),
     series: [...SO.reasons.map((r, k) => ({ name: r, type: "bar", stack: "lost", data: byM[k], itemStyle: { color: pal[k % pal.length] }, barMaxWidth: 14 })),
       { name: "Gap: asked for − shipped", type: "line", data: gap, symbol: "none", lineStyle: { width: 1.6, color: css("--ink") }, itemStyle: { color: css("--ink") } }] }));
   const ro = SO.reasons.map((r, k) => [r, byR[k], pal[k % pal.length]]).sort((a, b) => b[1] - a[1]);
@@ -1205,6 +1234,7 @@ function openHelp() {
       <li><b>P10 / P50 / P90</b>: 10% of months should fall below P10 and 10% above P90. P50 is the typical month; <b>expected</b> is the average, used for totals.</li>
       <li><b>WAPE</b>: total absolute error ÷ total demand. <b>Bias</b>: how much the forecast is too high (+) or too low (−) overall.</li>
       <li><b>Backtest</b>: forecasts made at four past dates using only what was known then, scored on the next 19 months.</li></ul>
+    <h3>Charts</h3><ul><li>Hover for values. To zoom a timeline, drag the ends of the bar under it, or pinch / <kbd>Ctrl</kbd> + scroll on the chart; <b>Reset zoom</b> puts it back.</li></ul>
     <h3>Keys</h3><ul><li><kbd>/</kbd> find a product, customer, region or view · <kbd>?</kbd> this panel · <kbd>t</kbd> light / dark · <kbd>esc</kbd> close</li></ul>`;
   box.hidden = false;
   const close = () => { box.hidden = true; };
@@ -1242,5 +1272,5 @@ function toggleTheme() {
     else if (e.key === "Escape") $("#helpbox").hidden = true;
   });
   addEventListener("hashchange", () => { const before = ST.view + JSON.stringify(ST.f); readHash(); if (ST.view + JSON.stringify(ST.f) !== before) { buildNav(); render(); } });
-  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => ST.charts.forEach(c => c.resize()), 120); });
+  if (!window.ResizeObserver) { let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => ST.charts.forEach(c => c.resize()), 120); }); }
 })();
