@@ -1,0 +1,594 @@
+{
+ "table": [
+  {
+   "method": "lightgbm",
+   "wape": 0.2901,
+   "bias": -0.051,
+   "rmse": 25.4356,
+   "mae": 13.6897,
+   "missing_rows": 0,
+   "wape_2022-03": 0.335,
+   "wape_2023-03": 0.2875,
+   "wape_2024-03": 0.266,
+   "wape_2025-03": 0.2774
+  },
+  {
+   "method": "XGBoost",
+   "wape": 0.2994,
+   "bias": -0.0212,
+   "rmse": 26.0155,
+   "mae": 14.1293,
+   "missing_rows": 0,
+   "wape_2022-03": 0.3517,
+   "wape_2023-03": 0.2918,
+   "wape_2024-03": 0.2719,
+   "wape_2025-03": 0.2884
+  },
+  {
+   "method": "CatBoost",
+   "wape": 0.2997,
+   "bias": -0.0748,
+   "rmse": 26.0416,
+   "mae": 14.1426,
+   "missing_rows": 0,
+   "wape_2022-03": 0.3451,
+   "wape_2023-03": 0.3024,
+   "wape_2024-03": 0.2748,
+   "wape_2025-03": 0.2824
+  },
+  {
+   "method": "NHITS",
+   "wape": 0.321,
+   "bias": -0.0756,
+   "rmse": 27.3553,
+   "mae": 15.146,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.3766,
+   "wape_2023-03": 0.3253,
+   "wape_2024-03": 0.2927,
+   "wape_2025-03": 0.2964
+  },
+  {
+   "method": "NBEATS",
+   "wape": 0.3344,
+   "bias": -0.0494,
+   "rmse": 28.6802,
+   "mae": 15.7819,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.4273,
+   "wape_2023-03": 0.3293,
+   "wape_2024-03": 0.2953,
+   "wape_2025-03": 0.2971
+  },
+  {
+   "method": "Chronos2",
+   "wape": 0.3473,
+   "bias": -0.0581,
+   "rmse": 28.9912,
+   "mae": 16.3864,
+   "missing_rows": 0,
+   "wape_2022-03": 0.4022,
+   "wape_2023-03": 0.358,
+   "wape_2024-03": 0.323,
+   "wape_2025-03": 0.3132
+  },
+  {
+   "method": "TimesFM",
+   "wape": 0.3664,
+   "bias": -0.1118,
+   "rmse": 31.162,
+   "mae": 17.2893,
+   "missing_rows": 0,
+   "wape_2022-03": 0.4195,
+   "wape_2023-03": 0.3765,
+   "wape_2024-03": 0.3489,
+   "wape_2025-03": 0.3277
+  },
+  {
+   "method": "ETS",
+   "wape": 0.386,
+   "bias": 0.0047,
+   "rmse": 32.3076,
+   "mae": 18.2134,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.4329,
+   "wape_2023-03": 0.3893,
+   "wape_2024-03": 0.3601,
+   "wape_2025-03": 0.3675
+  },
+  {
+   "method": "ARIMA",
+   "wape": 0.3896,
+   "bias": 0.0323,
+   "rmse": 32.6753,
+   "mae": 18.3828,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.4512,
+   "wape_2023-03": 0.3966,
+   "wape_2024-03": 0.3522,
+   "wape_2025-03": 0.3663
+  },
+  {
+   "method": "SNaive",
+   "wape": 0.398,
+   "bias": -0.0057,
+   "rmse": 34.6562,
+   "mae": 18.7807,
+   "missing_rows": 11844,
+   "wape_2022-03": 0.4831,
+   "wape_2023-03": 0.3888,
+   "wape_2024-03": 0.3607,
+   "wape_2025-03": 0.3695
+  },
+  {
+   "method": "ChronosBolt",
+   "wape": 0.4769,
+   "bias": -0.1271,
+   "rmse": 41.246,
+   "mae": 22.506,
+   "missing_rows": 0,
+   "wape_2022-03": 0.524,
+   "wape_2023-03": 0.4826,
+   "wape_2024-03": 0.4601,
+   "wape_2025-03": 0.4471
+  },
+  {
+   "method": "Theta",
+   "wape": 0.4902,
+   "bias": 0.0584,
+   "rmse": 40.0207,
+   "mae": 23.1295,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.5947,
+   "wape_2023-03": 0.4891,
+   "wape_2024-03": 0.4406,
+   "wape_2025-03": 0.4491
+  },
+  {
+   "method": "TFT",
+   "wape": 0.4946,
+   "bias": -0.1572,
+   "rmse": 45.8631,
+   "mae": 23.3406,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.5599,
+   "wape_2023-03": 0.4841,
+   "wape_2024-03": 0.4726,
+   "wape_2025-03": 0.4693
+  },
+  {
+   "method": "ADIDA",
+   "wape": 0.5144,
+   "bias": -0.0317,
+   "rmse": 41.3989,
+   "mae": 24.2728,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.558,
+   "wape_2023-03": 0.5028,
+   "wape_2024-03": 0.4944,
+   "wape_2025-03": 0.507
+  },
+  {
+   "method": "IMAPA",
+   "wape": 0.5145,
+   "bias": -0.0334,
+   "rmse": 41.4551,
+   "mae": 24.2763,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.5584,
+   "wape_2023-03": 0.503,
+   "wape_2024-03": 0.4943,
+   "wape_2025-03": 0.5069
+  },
+  {
+   "method": "Croston",
+   "wape": 0.5146,
+   "bias": -0.037,
+   "rmse": 41.3391,
+   "mae": 24.2825,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.558,
+   "wape_2023-03": 0.5029,
+   "wape_2024-03": 0.4949,
+   "wape_2025-03": 0.5073
+  },
+  {
+   "method": "TSB",
+   "wape": 0.5156,
+   "bias": -0.0651,
+   "rmse": 41.8348,
+   "mae": 24.3313,
+   "missing_rows": 1071,
+   "wape_2022-03": 0.5559,
+   "wape_2023-03": 0.5134,
+   "wape_2024-03": 0.4995,
+   "wape_2025-03": 0.4985
+  }
+ ],
+ "blends_with_lightgbm": [
+  {
+   "partner": "NHITS",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.1,
+     "wape_blend": 0.26581382645023505,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.1,
+     "wape_blend": 0.2764435882552193,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.00038586728305308365
+  },
+  {
+   "partner": "ETS",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "Theta",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "ARIMA",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "Croston",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "ADIDA",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "IMAPA",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "TSB",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "SNaive",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "NBEATS",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "TFT",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "ChronosBolt",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "Chronos2",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "TimesFM",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "CatBoost",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2773874025782172,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": 0.0
+  },
+  {
+   "partner": "XGBoost",
+   "test": [
+    {
+     "origin": "2023-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2874971232049885,
+     "wape_lightgbm": 0.2874971232049885
+    },
+    {
+     "origin": "2024-03",
+     "weight_on_partner": 0.0,
+     "wape_blend": 0.2660276139763964,
+     "wape_lightgbm": 0.2660276139763964
+    },
+    {
+     "origin": "2025-03",
+     "weight_on_partner": 0.1,
+     "wape_blend": 0.27766718943286084,
+     "wape_lightgbm": 0.2773874025782172
+    }
+   ],
+   "mean_gain": -9.326228488121258e-05
+  }
+ ]
+}

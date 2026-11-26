@@ -1,0 +1,12 @@
+# Only for experiments/zoo.py (model comparison on a GPU machine); the pipeline itself needs requirements.txt only.
+torch>=2.4
+pandas<3
+pyarrow
+statsforecast
+neuralforecast
+chronos-forecasting
+timesfm[torch]
+catboost
+xgboost
+lightgbm
+scikit-learn

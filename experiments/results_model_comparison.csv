@@ -1,0 +1,16 @@
+method,family,wape,bias,mae,rmse
+LightGBM global model,Chosen model (pipeline),0.288,-0.0449,13.5924,25.2984
+XGBoost,Gradient boosting,0.2994,-0.0212,14.1293,26.0155
+CatBoost,Gradient boosting,0.2997,-0.0748,14.1426,26.0416
+N-HiTS,Deep learning,0.321,-0.0756,15.146,27.3553
+N-BEATS,Deep learning,0.3344,-0.0494,15.7819,28.6802
+Chronos-2 (zero-shot),Pretrained,0.3473,-0.0581,16.3864,28.9912
+TimesFM 2.5 (zero-shot),Pretrained,0.3664,-0.1118,17.2893,31.162
+AutoETS,Statistical,0.386,0.0047,18.2134,32.3076
+AutoARIMA,Statistical,0.3896,0.0323,18.3828,32.6753
+Chronos-Bolt (zero-shot),Pretrained,0.4769,-0.1271,22.506,41.246
+AutoTheta,Statistical,0.4902,0.0584,23.1295,40.0207
+TFT,Deep learning,0.4946,-0.1572,23.3406,45.8631
+ADIDA,Intermittent,0.5144,-0.0317,24.2728,41.3989
+IMAPA,Intermittent,0.5145,-0.0334,24.2763,41.4551
+Croston (optimised),Intermittent,0.5146,-0.037,24.2825,41.3391

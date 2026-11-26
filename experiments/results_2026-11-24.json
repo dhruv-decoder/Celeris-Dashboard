@@ -1,0 +1,16 @@
+{
+  "note": "first version experiments, 2026-11-24. Same replay test as the baselines (4 origins x 19 months, 218,063 rows). Scripts: experiments/model_variants.py, experiments/build_feature_table.py",
+  "variants": [
+    {"name": "Absolute-error model, first feature set", "wape": 0.2996, "bias": -0.0555, "bias_by_origin": {"2022-03": -0.004, "2023-03": -0.092, "2024-03": -0.119, "2025-03": -0.001}},
+    {"name": "+ one-off orders capped, COVID/strike down-weighted", "wape": 0.3043, "bias": -0.0373, "bias_by_origin": {"2022-03": 0.076, "2023-03": -0.092, "2024-03": -0.123, "2025-03": 0.001}},
+    {"name": "Squared-error model (aims at the average)", "wape": 0.3104, "bias": 0.0203, "bias_by_origin": {"2022-03": 0.152, "2023-03": -0.04, "2024-03": -0.068, "2025-03": 0.05}},
+    {"name": "Absolute-error model + group growth and economy-change features (chosen)", "wape": 0.2946, "bias": -0.0629, "bias_by_origin": {"2022-03": -0.06, "2023-03": -0.071, "2024-03": -0.094, "2025-03": -0.026}}
+  ],
+  "bias_multipliers": [
+    {"factor": 1.00, "wape": 0.2946, "bias": -0.0629},
+    {"factor": 1.02, "wape": 0.2950, "bias": -0.0441},
+    {"factor": 1.04, "wape": 0.2961, "bias": -0.0254},
+    {"factor": 1.06, "wape": 0.2981, "bias": -0.0066},
+    {"factor": 1.08, "wape": 0.3009, "bias": 0.0121}
+  ]
+}

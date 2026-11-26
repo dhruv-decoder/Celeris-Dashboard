@@ -1,0 +1,361 @@
+{
+ "date": "2026-11-25",
+ "test": "same replay test as run.py model_backtest: 4 origins x 19 months, 218,063 scored rows",
+ "variants": [
+  {
+   "variant": "base",
+   "wape": 0.2946,
+   "bias": -0.0629,
+   "rows": 218063,
+   "features": 49,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 6.8,
+   "by_origin": {
+    "2022-03": 0.3399,
+    "2023-03": 0.2924,
+    "2024-03": 0.2722,
+    "2025-03": 0.2794
+   },
+   "what": "first-version model re-run (old features, same settings)"
+  },
+  {
+   "variant": "small",
+   "wape": 0.2921,
+   "bias": -0.0681,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 900,
+   "origin_step": 2,
+   "minutes": 10.2,
+   "by_origin": {
+    "2022-03": 0.3374,
+    "2023-03": 0.289,
+    "2024-03": 0.2683,
+    "2025-03": 0.2794
+   },
+   "what": "new features, 31 leaves, 900 trees"
+  },
+  {
+   "variant": "feat",
+   "wape": 0.2912,
+   "bias": -0.0633,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 6.5,
+   "by_origin": {
+    "2022-03": 0.3361,
+    "2023-03": 0.2873,
+    "2024-03": 0.2685,
+    "2025-03": 0.2784
+   },
+   "what": "+ 14 new features (intermittency class, order-size stats, timing around last year's month, customer and product growth)"
+  },
+  {
+   "variant": "feat_m",
+   "wape": 0.2919,
+   "bias": -0.0675,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 1,
+   "minutes": 14.1,
+   "by_origin": {
+    "2022-03": 0.3359,
+    "2023-03": 0.2897,
+    "2024-03": 0.2681,
+    "2025-03": 0.2791
+   },
+   "what": "new features, every month as a training origin (twice the rows)"
+  },
+  {
+   "variant": "s1",
+   "wape": 0.2918,
+   "bias": -0.0711,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 5.5,
+   "by_origin": {
+    "2022-03": 0.3369,
+    "2023-03": 0.2895,
+    "2024-03": 0.2681,
+    "2025-03": 0.2784
+   },
+   "what": "new features, seed 1, 70% column/row sampling"
+  },
+  {
+   "variant": "l2",
+   "wape": 0.2977,
+   "bias": -0.0048,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 1.1,
+   "by_origin": {
+    "2022-03": 0.3477,
+    "2023-03": 0.2925,
+    "2024-03": 0.2703,
+    "2025-03": 0.2864
+   },
+   "what": "new features, squared-error objective (aims at the average)"
+  },
+  {
+   "variant": "huber",
+   "wape": 0.2955,
+   "bias": -0.0248,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 1.1,
+   "by_origin": {
+    "2022-03": 0.3416,
+    "2023-03": 0.2912,
+    "2024-03": 0.2679,
+    "2025-03": 0.287
+   },
+   "what": "new features, Huber objective"
+  },
+  {
+   "variant": "big",
+   "wape": 0.2913,
+   "bias": -0.0621,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 1500,
+   "origin_step": 2,
+   "minutes": 18.0,
+   "by_origin": {
+    "2022-03": 0.3352,
+    "2023-03": 0.2884,
+    "2024-03": 0.2678,
+    "2025-03": 0.2791
+   },
+   "what": "new features, 1500 smaller-step trees, 127 leaves"
+  },
+  {
+   "variant": "s3",
+   "wape": 0.2923,
+   "bias": -0.0666,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 6.9,
+   "by_origin": {
+    "2022-03": 0.3378,
+    "2023-03": 0.2895,
+    "2024-03": 0.2694,
+    "2025-03": 0.278
+   },
+   "what": "new features, seed 3, 90% sampling"
+  },
+  {
+   "variant": "s1_m",
+   "wape": 0.2908,
+   "bias": -0.0715,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 1,
+   "minutes": 12.3,
+   "by_origin": {
+    "2022-03": 0.333,
+    "2023-03": 0.2889,
+    "2024-03": 0.2679,
+    "2025-03": 0.2785
+   },
+   "what": "as s1, every month as an origin"
+  },
+  {
+   "variant": "q55",
+   "wape": 0.2925,
+   "bias": -0.0269,
+   "rows": 218063,
+   "features": 63,
+   "rounds": 600,
+   "origin_step": 2,
+   "minutes": 6.2,
+   "by_origin": {
+    "2022-03": 0.339,
+    "2023-03": 0.2888,
+    "2024-03": 0.2651,
+    "2025-03": 0.2829
+   },
+   "what": "new features, 55th-percentile objective"
+  }
+ ],
+ "chosen_recipe": {
+  "members": [
+   "feat (l1)",
+   "s1 (l1_seed1)",
+   "s3 (l1_seed3)",
+   "l2"
+  ],
+  "weights": "equal",
+  "wape": 0.2904,
+  "bias": -0.0516,
+  "why": "fixed before looking at the 162 possible mixes: three typical-month models with different seeds plus one average-month model"
+ },
+ "honest_selection_check": [
+  {
+   "test_origin": "2023-03",
+   "chosen": [
+    "feat",
+    "s1",
+    "l2",
+    "big"
+   ],
+   "wape_chosen": 0.2874,
+   "wape_recipe": 0.2876,
+   "wape_feat": 0.2873
+  },
+  {
+   "test_origin": "2024-03",
+   "chosen": [
+    "feat",
+    "s1",
+    "l2",
+    "big"
+   ],
+   "wape_chosen": 0.2664,
+   "wape_recipe": 0.2667,
+   "wape_feat": 0.2685
+  },
+  {
+   "test_origin": "2025-03",
+   "chosen": [
+    "feat",
+    "s1",
+    "l2",
+    "big"
+   ],
+   "wape_chosen": 0.2787,
+   "wape_recipe": 0.2785,
+   "wape_feat": 0.2784
+  }
+ ],
+ "best_10_mixes_for_reference": [
+  {
+   "combo": "big+feat+feat_m+l2",
+   "wape": 0.2903,
+   "bias": -0.0496,
+   "by_origin": {
+    "2022-03": 0.3338,
+    "2023-03": 0.2875,
+    "2024-03": 0.2664,
+    "2025-03": 0.2788
+   }
+  },
+  {
+   "combo": "big+feat+l2+s1",
+   "wape": 0.2903,
+   "bias": -0.0505,
+   "by_origin": {
+    "2022-03": 0.3339,
+    "2023-03": 0.2874,
+    "2024-03": 0.2664,
+    "2025-03": 0.2787
+   }
+  },
+  {
+   "combo": "big+feat_m+l2+s1",
+   "wape": 0.2903,
+   "bias": -0.0515,
+   "by_origin": {
+    "2022-03": 0.3335,
+    "2023-03": 0.2879,
+    "2024-03": 0.2663,
+    "2025-03": 0.2789
+   }
+  },
+  {
+   "combo": "feat+feat_m+l2+s1",
+   "wape": 0.2903,
+   "bias": -0.0519,
+   "by_origin": {
+    "2022-03": 0.3337,
+    "2023-03": 0.2876,
+    "2024-03": 0.2664,
+    "2025-03": 0.2788
+   }
+  },
+  {
+   "combo": "base+big+feat+l2",
+   "wape": 0.2904,
+   "bias": -0.0484,
+   "by_origin": {
+    "2022-03": 0.3344,
+    "2023-03": 0.2876,
+    "2024-03": 0.2669,
+    "2025-03": 0.2783
+   }
+  },
+  {
+   "combo": "base+big+feat_m+l2",
+   "wape": 0.2904,
+   "bias": -0.0495,
+   "by_origin": {
+    "2022-03": 0.334,
+    "2023-03": 0.288,
+    "2024-03": 0.2667,
+    "2025-03": 0.2784
+   }
+  },
+  {
+   "combo": "base+big+l2+s1",
+   "wape": 0.2904,
+   "bias": -0.0504,
+   "by_origin": {
+    "2022-03": 0.3341,
+    "2023-03": 0.288,
+    "2024-03": 0.2667,
+    "2025-03": 0.2783
+   }
+  },
+  {
+   "combo": "base+feat+feat_m+l2",
+   "wape": 0.2904,
+   "bias": -0.0498,
+   "by_origin": {
+    "2022-03": 0.3342,
+    "2023-03": 0.2877,
+    "2024-03": 0.2668,
+    "2025-03": 0.2783
+   }
+  },
+  {
+   "combo": "base+feat+l2+s1",
+   "wape": 0.2904,
+   "bias": -0.0507,
+   "by_origin": {
+    "2022-03": 0.3342,
+    "2023-03": 0.2877,
+    "2024-03": 0.2669,
+    "2025-03": 0.2781
+   }
+  },
+  {
+   "combo": "big+feat+l2+small",
+   "wape": 0.2904,
+   "bias": -0.0497,
+   "by_origin": {
+    "2022-03": 0.3343,
+    "2023-03": 0.2873,
+    "2024-03": 0.2664,
+    "2025-03": 0.2789
+   }
+  }
+ ],
+ "not_used": [
+  "monthly origins (no better than every 2nd month)",
+  "bigger trees (same score, 3x slower)",
+  "quantile 0.55 (bias -2.7% but WAPE worse)",
+  "Huber (bias -2.5% but WAPE worse)"
+ ]
+}
