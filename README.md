@@ -167,6 +167,7 @@ Full table: [`experiments/results_model_comparison.csv`](experiments/results_mod
 
 Required views in **bold**.
 
+- The **All / Part 1 / Part 2** switch above the menu shows every view, or only the views for one part of the brief.
 - The same five filters (family, product, region, channel, customer) apply to every view. The address bar keeps
   them, so a copied link opens the same view with the same filters.
 - History and forecast share one timeline, with the forecast marked and its P10–P90 range shaded.
@@ -236,6 +237,12 @@ The two browser tests need Playwright: `pip install playwright && playwright ins
 | [FORECASTING.md](docs/FORECASTING.md) | Backtest, simple methods, features, demand classes, economic drivers |
 | [MODEL.md](docs/MODEL.md) | The model, the experiments, the comparison with other approaches, ranges |
 | [DASHBOARD.md](docs/DASHBOARD.md) | Every view, ranges for totals, what-if, testing |
+
+## AI use declaration
+
+The idea, the thought process and the overall work (problem analysis, data investigation, modelling decisions and
+dashboard design) are by Dhruv Tibarewal, developed during the MKS AI & Data Hackathon period. AI coding assistance
+was used for implementation work.
 
 ---
 
